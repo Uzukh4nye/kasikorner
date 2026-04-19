@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About: Kasi Korner</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hero {
+      background: var(--black);
+      padding: 80px 40px;
+      border-bottom: 3px solid var(--yellow);
+    }
+
+    .hero h1 { font-size: 72px; color: var(--white); margin-bottom: 16px; }
+    .hero h1 em { color: var(--yellow); font-style: normal; }
+    .hero p { font-size: 15px; color: #777; max-width: 520px; line-height: 1.7; }
+
+    .story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1.5px solid var(--black);
+    }
+
+    .story-text {
+      padding: 56px 40px;
+      border-right: 1.5px solid var(--black);
+    }
+
+    .story-text h2 { font-size: 40px; margin-bottom: 20px; }
+
+    .story-text p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .story-img {
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .story-img-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      color: var(--yellow);
+      text-transform: lowercase;
+      text-align: center;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .story-img-sub { font-size: 12px; color: #555; letter-spacing: 2px; text-transform: uppercase; }
+
+    .stats {
+      background: var(--yellow);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1.5px solid var(--black);
+    }
+
+    .stat {
+      padding: 32px 20px;
+      text-align: center;
+      border-right: 1.5px solid var(--black);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .stat-label { font-size: 11px; color: #555; margin-top: 5px; }
+
+    .problems {
+      padding: 56px 40px;
+      background: var(--gray);
+    }
+
+    .problems h2 { font-size: 40px; margin-bottom: 28px; text-align: center; }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1.5px solid var(--black);
+    }
+
+    .problem-card {
+      background: var(--white);
+      padding: 28px;
+      border-right: 1.5px solid var(--black);
+    }
+
+    .problem-card:last-child { border-right: none; }
+
+    .problem-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 40px;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .problem-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      text-transform: lowercase;
+      margin-bottom: 8px;
+    }
+
+    .problem-desc { font-size: 13px; color: #555; line-height: 1.7; }
+
+    .cta {
+      background: var(--black);
+      padding: 56px 40px;
+      text-align: center;
+    }
+
+    .cta h2 { font-size: 48px; color: var(--white); margin-bottom: 10px; }
+    .cta h2 em { color: var(--yellow); font-style: normal; }
+    .cta p { font-size: 13px; color: #777; margin-bottom: 28px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">kasi <span>korner.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">home</a></li>
+    <li><a href="browse.html">browse spaza shops </a></li>
+    <li><a href="categories.html">categories</a></li>
+    <li><a href="mylist.html">my list</a></li>
+    <li><a href="about.html" class="active">about</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="mylist.html" class="cart-icon">&#9776;<span class="cart-badge" id="cart-count">0</span></a>
+    <a href="list-your-shop.html" class="nav-cta">list your shop</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>built for<br>the <em>kasi.</em><br>built by<br>the <em>kasi.</em></h1>
+  <p>Kasi Korner is born from the everyday experience of growing up in a South African township, and knowing there has to be a better way.</p>
+</section>
+
+<section class="story">
+  <div class="story-text">
+    <h2>our story.</h2>
+    <p>Growing up in the townships, going to the spaza shop was part of daily life. But it always came with uncertainty: you never knew if the item you needed was in stock, or if the price had changed since last time.</p>
+    <p>Being sent by your mother to buy spices, arriving at the spaza and finding out they don't have it, walking to another one, arriving home with the wrong thing... that experience of uncertainty is something every township resident knows.</p>
+    <p>Kasi Korner was built to solve that. Not through delivery, not through replacing the spaza, but by giving the community the information they need before they leave home.</p>
+    <p>Township commerce has always been the backbone of community life. We're just helping it be seen.</p>
+  </div>
+  <div class="story-img">
+    <div class="story-img-label">eKasi,<br>cape town.</div>
+    <div class="story-img-sub">where kasi korner began</div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <div class="stat-num">150k+</div>
+    <div class="stat-label">spaza shops in South Africa</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">R178bn</div>
+    <div class="stat-label">informal food market value</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">80%</div>
+    <div class="stat-label">of SA shops informally</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">R75</div>
+    <div class="stat-label">per month to list your shop</div>
+  </div>
+</section>
+
+<section class="problems">
+  <h2>the problems we solve.</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-num">01</div>
+      <div class="problem-title">no price visibility</div>
+      <div class="problem-desc">Prices change without warning. You only find out when you're already at the counter and sometimes even without enough money. Kasi Korner shows you prices before you leave.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">02</div>
+      <div class="problem-title">no stock visibility</div>
+      <div class="problem-desc">You walk to one spaza, it doesn't have what you need. Then another. Wasted trips, wasted time. Kasi Korner shows you exactly what's in stock nearby.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">03</div>
+      <div class="problem-title">safety at night</div>
+      <div class="problem-desc">Carrying cash near spaza shops at night carries risk. Knowing your total in advance means no unexpected stops, no extra cash, and no surprises!</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>join <em>kasi korner.</em></h2>
+  <p>Whether you're a shopper or a shop owner, there's a place for you here eKasi.</p>
+  <div class="cta-btns">
+    <a href="browse.html" class="btn-primary">browse spazas</a>
+    <a href="list-your-shop.html" class="btn-outline">list your shop</a>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">kasi <span>korner.</span></div>
+  <p>© 2026 Kasi Korner | Connecting township communities to local spaza shops</p>
+</footer>
+
+<script>
+function updateCartCount() {
+  const list = JSON.parse(localStorage.getItem('kasiList') || '[]');
+  document.getElementById('cart-count').textContent = list.length;
+}
+updateCartCount();
+</script>
+</body>
+</html>

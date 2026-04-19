@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Your Shop: Kasi Korner</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-header {
+      background: var(--black);
+      padding: 48px 40px 32px;
+      border-bottom: 3px solid var(--yellow);
+    }
+
+    .page-header h1 { font-size: 56px; color: var(--white); margin-bottom: 6px; }
+    .page-header p { color: #777; font-size: 13px; }
+
+    .body {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 0;
+      background: var(--gray);
+    }
+
+    .form-section { padding: 40px; }
+
+    .form-step {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1.5px solid var(--black);
+    }
+
+    .form-step:last-child { border-bottom: none; }
+
+    .step-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--yellow);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      text-transform: lowercase;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--black);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      padding: 11px 14px;
+      border: 1.5px solid var(--black);
+      font-size: 13px;
+      font-family: 'Barlow', sans-serif;
+      outline: none;
+      background: var(--white);
+      color: var(--black);
+      transition: border-color 0.15s;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--yellow);
+    }
+
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+
+    /* choose your plan section */
+    .plan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1.5px solid var(--black);
+    }
+
+    .plan-card {
+      padding: 24px;
+      cursor: pointer;
+      border-right: 1.5px solid var(--black);
+      transition: background 0.15s;
+      position: relative;
+    }
+
+    .plan-card:last-child { border-right: none; }
+
+    .plan-card.selected { background: var(--yellow); }
+
+    .plan-card input[type="radio"] { display: none; }
+
+    .plan-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      text-transform: lowercase;
+      margin-bottom: 6px;
+    }
+
+    .plan-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .plan-features { list-style: none; }
+
+    .plan-features li {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .plan-features li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--black);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .plan-card.selected .plan-features li { color: #333; }
+
+    .selected-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 9px;
+      font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      display: none;
+    }
+
+    .plan-card.selected .selected-badge { display: block; }
+
+
+
+    /* summary (of order) */
+    .summary-sidebar {
+      background: var(--white);
+      border-left: 1.5px solid var(--black);
+      padding: 32px 28px;
+      position: sticky;
+      top: 60px;
+      height: fit-content;
+    }
+
+    .summary-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      text-transform: lowercase;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray);
+      font-size: 13px;
+    }
+
+    .summary-label { color: var(--mid); }
+
+    .summary-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0 0;
+      margin-top: 8px;
+    }
+
+    .total-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: lowercase;
+    }
+
+    .total-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      padding: 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background 0.15s;
+    }
+
+    .submit-btn:hover { background: #b5a520; }
+
+
+
+    /* success screen! */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 80px 40px;
+      background: var(--white);
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--yellow);
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .success-h { font-size: 48px; margin-bottom: 12px; }
+    .success-p { font-size: 14px; color: var(--mid); max-width: 400px; margin: 0 auto 24px; line-height: 1.7; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">kasi <span>korner.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">home</a></li>
+    <li><a href="browse.html">browse spaza shops</a></li>
+    <li><a href="categories.html">categories</a></li>
+    <li><a href="mylist.html">my list</a></li>
+    <li><a href="about.html">about</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="mylist.html" class="cart-icon">&#9776;<span class="cart-badge" id="cart-count">0</span></a>
+    <a href="list-your-shop.html" class="nav-cta">list your shop</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>list your shop.</h1>
+  <p>Join Kasi Korner and get found by your community. Setup takes less than 5 minutes.</p>
+</div>
+
+<div id="success-screen" class="success-screen">
+  <div class="success-icon">✓</div>
+  <h2 class="success-h">you're listed.</h2>
+  <p>Your shop has been submitted to Kasi Korner. We'll review your listing and get you live within 24 hours.</p>
+  <a href="index.html" class="btn-primary">back to home</a>
+</div>
+
+<div class="body" id="form-body">
+  <div class="form-section">
+
+    <div class="form-step">
+      <div class="step-label">
+        <div class="step-num">01</div>
+        <div class="step-title">choose your plan</div>
+      </div>
+      <div class="plan-grid">
+        <div class="plan-card selected" id="plan-basic" onclick="selectPlan('basic')">
+          <input type="radio" name="plan" value="basic" checked>
+          <div class="selected-badge">selected</div>
+          <div class="plan-name">basic listing</div>
+          <div class="plan-price">R75<span style="font-size:14px;font-weight:400">/mo</span></div>
+          <ul class="plan-features">
+            <li>Shop listed on Kasi Korner</li>
+            <li>List your products and prices</li>
+            <li>Appear in community searches</li>
+            <li>Update stock anytime</li>
+          </ul>
+        </div>
+        <div class="plan-card" id="plan-premium" onclick="selectPlan('premium')">
+          <input type="radio" name="plan" value="premium">
+          <div class="selected-badge">selected</div>
+          <div class="plan-name">premium listing</div>
+          <div class="plan-price">R150<span style="font-size:14px;font-weight:400">/mo</span></div>
+          <ul class="plan-features">
+            <li>Everything in Basic</li>
+            <li>Featured at top of searches</li>
+            <li>Weekly analytics report</li>
+            <li>Priority WhatsApp support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <div class="step-label">
+        <div class="step-num">02</div>
+        <div class="step-title">shop details</div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">shop name *</label>
+          <input class="form-input" type="text" id="shop-name" placeholder="e.g. Amir's Spaza" oninput="updateSummary()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">owner name *</label>
+          <input class="form-input" type="text" id="owner-name" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">phone number *</label>
+          <input class="form-input" type="tel" id="phone" placeholder="e.g. 071 234 5678">
+        </div>
+        <div class="form-group">
+          <label class="form-label">area / township *</label>
+          <input class="form-input" type="text" id="area" placeholder="e.g. Dunoon, Cape Town">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">street address *</label>
+          <input class="form-input" type="text" id="address" placeholder="Corner of...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">opening time</label>
+          <input class="form-input" type="time" id="open-time" value="06:00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">closing time</label>
+          <input class="form-input" type="time" id="close-time" value="22:30">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <div class="step-label">
+        <div class="step-num">03</div>
+        <div class="step-title">what do you sell?</div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">categories (select all that apply)</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" style="accent-color:var(--yellow)"> Groceries</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" style="accent-color:var(--yellow)"> Airtime & Data</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" style="accent-color:var(--yellow)"> Snacks</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" style="accent-color:var(--yellow)"> Toiletries</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" style="accent-color:var(--yellow)"> Household</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;"><input type="checkbox" style="accent-color:var(--yellow)"> Electricity</label>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">additional notes (optional)</label>
+          <textarea class="form-textarea" placeholder="Anything else customers should know about your shop..."></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="summary-sidebar">
+    <div class="summary-title">order summary.</div>
+    <div class="summary-row">
+      <span class="summary-label">shop</span>
+      <span class="summary-val" id="sum-shop">—</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">plan</span>
+      <span class="summary-val" id="sum-plan">Basic listing</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">billing</span>
+      <span class="summary-val">Monthly</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">first payment</span>
+      <span class="summary-val">On approval</span>
+    </div>
+    <div class="summary-total">
+      <span class="total-label">total / month</span>
+      <span class="total-val" id="sum-total">R75</span>
+    </div>
+    <button class="submit-btn" onclick="submitForm()">submit listing →</button>
+    <p style="font-size:10px;color:#bbb;margin-top:12px;line-height:1.6;">
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">kasi <span>korner.</span></div>
+  <p>© 2026 Kasi Korner | Connecting township communities to local spaza shops</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let selectedPlan = 'basic';
+
+function selectPlan(plan) {
+  selectedPlan = plan;
+  document.getElementById('plan-basic').classList.toggle('selected', plan === 'basic');
+  document.getElementById('plan-premium').classList.toggle('selected', plan === 'premium');
+  document.getElementById('sum-plan').textContent = plan === 'basic' ? 'Basic listing' : 'Premium listing';
+  document.getElementById('sum-total').textContent = plan === 'basic' ? 'R75' : 'R150';
+}
+
+function updateSummary() {
+  const name = document.getElementById('shop-name').value.trim();
+  document.getElementById('sum-shop').textContent = name || '—';
+}
+
+function submitForm() {
+  const shopName = document.getElementById('shop-name').value.trim();
+  const ownerName = document.getElementById('owner-name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const area = document.getElementById('area').value.trim();
+  const address = document.getElementById('address').value.trim();
+
+  if (!shopName || !ownerName || !phone || !area || !address) {
+    showToast('please fill in all required fields');
+    return;
+  }
+
+  document.getElementById('form-body').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function updateCartCount() {
+  const list = JSON.parse(localStorage.getItem('kasiList') || '[]');
+  document.getElementById('cart-count').textContent = list.length;
+}
+
+updateCartCount();
+</script>
+</body>
+</html>

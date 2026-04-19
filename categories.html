@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories: Kasi Korner</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-header {
+      background: var(--black);
+      padding: 48px 40px 32px;
+      border-bottom: 3px solid var(--yellow);
+    }
+
+    .page-header h1 { font-size: 56px; color: var(--white); margin-bottom: 6px; }
+    .page-header p { color: #777; font-size: 13px; }
+
+    .body { padding: 40px; background: var(--gray); }
+
+    .cat-nav {
+      display: flex;
+      gap: 0;
+      border: 1.5px solid var(--black);
+      margin-bottom: 32px;
+      background: var(--white);
+    }
+
+    .cat-nav-item {
+      flex: 1;
+      padding: 14px 10px;
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      color: var(--mid);
+      border-right: 1.5px solid var(--black);
+      transition: all 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .cat-nav-item:last-child { border-right: none; }
+    .cat-nav-item:hover, .cat-nav-item.active { background: var(--yellow); color: var(--black); }
+
+    .cat-section { margin-bottom: 40px; }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--black);
+    }
+
+    .cat-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      text-transform: lowercase;
+      line-height: 1;
+    }
+
+    .cat-count {
+      font-size: 11px;
+      color: var(--mid);
+      margin-left: auto;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .products-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1.5px solid var(--black);
+    }
+
+    .product-card {
+      background: var(--white);
+      border-right: 1.5px solid var(--black);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .product-card:last-child { border-right: none; }
+    .product-card:hover { background: #f8f8f2; }
+
+    .product-img {
+      height: 70px;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1.5px solid var(--black);
+    }
+
+    .product-img-inner {
+      width: 32px;
+      height: 32px;
+      background: var(--black);
+      opacity: 0.12;
+    }
+
+    .product-info { padding: 12px; }
+
+    .product-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: lowercase;
+      margin-bottom: 2px;
+    }
+
+    .product-shops { font-size: 10px; color: var(--mid); margin-bottom: 6px; }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price-range {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .compare-btn {
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 5px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .compare-btn:hover { background: var(--yellow); color: var(--black); }
+
+    .compare-popup {
+      display: none;
+      background: var(--white);
+      border: 1.5px solid var(--black);
+      padding: 12px;
+      margin-top: 8px;
+    }
+
+    .compare-popup.show { display: block; }
+
+    .compare-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--gray);
+      font-size: 12px;
+    }
+
+    .compare-row:last-child { border-bottom: none; }
+    .compare-shop { font-weight: 600; }
+    .compare-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 14px; }
+    .best-price { color: #4a8a4a; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">kasi <span>korner.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">home</a></li>
+    <li><a href="browse.html">browse spaza shops</a></li>
+    <li><a href="categories.html" class="active">categories</a></li>
+    <li><a href="mylist.html">my list</a></li>
+    <li><a href="about.html">about</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="mylist.html" class="cart-icon">&#9776;<span class="cart-badge" id="cart-count">0</span></a>
+    <a href="list-your-shop.html" class="nav-cta">list your shop</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>categories.</h1>
+  <p>Browse by product type and compare prices across nearby spaza shops!</p>
+</div>
+
+<div class="body">
+  <div class="cat-nav">
+    <a href="#groceries" class="cat-nav-item active">groceries</a>
+    <a href="#airtime" class="cat-nav-item">airtime & data</a>
+    <a href="#snacks" class="cat-nav-item">snacks</a>
+    <a href="#toiletries" class="cat-nav-item">toiletries</a>
+    <a href="#household" class="cat-nav-item">household</a>
+  </div>
+
+  <div class="cat-section" id="groceries">
+    <div class="cat-header">
+      <div class="cat-title">groceries</div>
+      <div class="cat-count">12 products · 4 shops</div>
+    </div>
+    <div class="products-row" id="grid-groceries"></div>
+  </div>
+
+  <div class="cat-section" id="airtime">
+    <div class="cat-header">
+      <div class="cat-title">airtime & data</div>
+      <div class="cat-count">8 products · 3 shops</div>
+    </div>
+    <div class="products-row" id="grid-airtime"></div>
+  </div>
+
+  <div class="cat-section" id="snacks">
+    <div class="cat-header">
+      <div class="cat-title">snacks</div>
+      <div class="cat-count">10 products · 4 shops</div>
+    </div>
+    <div class="products-row" id="grid-snacks"></div>
+  </div>
+
+  <div class="cat-section" id="toiletries">
+    <div class="cat-header">
+      <div class="cat-title">toiletries & household</div>
+      <div class="cat-count">11 products · 3 shops</div>
+    </div>
+    <div class="products-row" id="grid-toiletries"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">kasi <span>korner.</span></div>
+  <p>© 2026 Kasi Korner | Connecting township communities to local spaza shops</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+    const productImages = {
+  "Albany White Bread": "images/albany-white-bread.png",
+  "Ace Maize Meal": "images/ace-maize-meal.png",
+  "Sasko Brown Bread": "images/sasko-brown-bread.png",
+  "Sunflower Oil 750ml": "images/sunflower-oil.png",
+  "Vodacom R10 Airtime": "images/vodacom-airtime.png",
+  "MTN R5 Airtime": "images/mtn-airtime.png",
+  "Electricity Token": "images/electricity-token.png",
+  "Lays Chips 120g": "images/lays-chips.png",
+  "Simba Chips 100g": "images/simba-chips.png",
+  "Chappies Bubblegum": "images/chappies-bubblegum.png",
+  "Sunlight Dish Soap 400ml": "images/sunlight-dish-soap.png",
+  "Colgate Toothpaste 75ml": "images/colgate-toothpaste.png",
+  "Omo Washing Powder 1kg": "images/omo-washing-powder.png",
+};
+
+const categories = {
+  groceries: [
+    { name:"Albany White Bread", shops:"4 shops", prices:[{shop:"Amir's Spaza",price:18},{shop:"Sam's Corner",price:20},{shop:"August Store",price:17},{shop:"Dunoon General",price:19}] },
+    { name:"Ace Maize Meal", shops:"3 shops", prices:[{shop:"Amir's Spaza",price:32},{shop:"Sipho's General",price:35},{shop:"Dunoon General",price:33}] },
+    { name:"Sasko Brown Bread", shops:"2 shops", prices:[{shop:"Amir's Spaza",price:16},{shop:"August Store",price:18}] },
+    { name:"Sunflower Oil 750ml", shops:"3 shops", prices:[{shop:"Amir's Spaza",price:29},{shop:"Sam's Corner",price:34},{shop:"Dunoon General",price:31}] },
+  ],
+  airtime: [
+    { name:"Vodacom R10 Airtime", shops:"3 shops", prices:[{shop:"Amir's Spaza",price:10},{shop:"Dunoon General",price:10},{shop:"Lucky's Shop",price:10}] },
+    { name:"MTN R5 Airtime", shops:"2 shops", prices:[{shop:"Amir's Spaza",price:5},{shop:"Lucky's Shop",price:5}] },
+    { name:"Electricity Token", shops:"2 shops", prices:[{shop:"Sipho's General",price:0},{shop:"Dunoon General",price:0}] },
+  ],
+  snacks: [
+    { name:"Lays Chips 120g", shops:"3 shops", prices:[{shop:"Amir's Spaza",price:15},{shop:"Sam's Corner",price:16},{shop:"Lucky's Shop",price:15}] },
+    { name:"Simba Chips 100g", shops:"3 shops", prices:[{shop:"Amir's Spaza",price:12},{shop:"Sam's Corner",price:13},{shop:"Lucky's Shop",price:12}] },
+    { name:"Chappies Bubblegum", shops:"4 shops", prices:[{shop:"Amir's Spaza",price:1},{shop:"Sam's Corner",price:1},{shop:"August Store",price:1},{shop:"Lucky's Shop",price:1}] },
+  ],
+  toiletries: [
+    { name:"Sunlight Dish Soap 400ml", shops:"3 shops", prices:[{shop:"Amir's Spaza",price:24},{shop:"Sam's Corner",price:26},{shop:"August Store",price:23}] },
+    { name:"Colgate Toothpaste 75ml", shops:"2 shops", prices:[{shop:"Amir's Spaza",price:18},{shop:"Sam's Corner",price:22}] },
+    { name:"Omo Washing Powder 1kg", shops:"2 shops", prices:[{shop:"Sam's Corner",price:38},{shop:"August Store",price:36}] },
+  ],
+};
+
+let openPopup = null;
+
+function renderCategories() {
+  for (const [cat, items] of Object.entries(categories)) {
+    const grid = document.getElementById(`grid-${cat}`);
+    if (!grid) continue;
+
+    grid.innerHTML = items.map((item, i) => {
+      const prices = item.prices.map(p => p.price).filter(p => p > 0);
+      const minPrice = prices.length ? Math.min(...prices) : 0;
+      const maxPrice = prices.length ? Math.max(...prices) : 0;
+      const priceDisplay = prices.length === 0 ? 'any amount' : minPrice === maxPrice ? `R${minPrice}` : `R${minPrice} – R${maxPrice}`;
+
+      const compareRows = item.prices.map(p => {
+        const isBest = p.price > 0 && p.price === minPrice;
+        return `<div class="compare-row">
+          <span class="compare-shop">${p.shop}</span>
+          <span class="compare-price ${isBest ? 'best-price' : ''}">
+            ${p.price === 0 ? 'any amount' : `R${p.price}`}
+            ${isBest ? ' ✓' : ''}
+          </span>
+        </div>`;
+      }).join('');
+
+      return `
+        <div class="product-card">
+         <div class="product-img">${productImages[item.name] ? `<img src="${productImages[item.name]}" style="width:100%;height:100%;object-fit:cover;">` : `<div class="product-img-inner"></div>`}</div>
+          <div class="product-info">
+            <div class="product-name">${item.name.toLowerCase()}</div>
+            <div class="product-shops">available at ${item.shops}</div>
+            <div class="price-row">
+              <div class="price-range">${priceDisplay}</div>
+              <button class="compare-btn" onclick="toggleCompare('${cat}-${i}')">compare</button>
+            </div>
+            <div class="compare-popup" id="popup-${cat}-${i}">
+              ${compareRows}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+function toggleCompare(id) {
+  const popup = document.getElementById(`popup-${id}`);
+  if (!popup) return;
+
+  if (openPopup && openPopup !== popup) {
+    openPopup.classList.remove('show');
+  }
+
+  popup.classList.toggle('show');
+  openPopup = popup.classList.contains('show') ? popup : null;
+}
+
+function updateCartCount() {
+  const list = JSON.parse(localStorage.getItem('kasiList') || '[]');
+  document.getElementById('cart-count').textContent = list.length;
+}
+
+document.querySelectorAll('.cat-nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.cat-nav-item').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+renderCategories();
+updateCartCount();
+</script>
+</body>
+</html>

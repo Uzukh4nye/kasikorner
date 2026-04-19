@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My List: Kasi Korner</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-header {
+      background: var(--black);
+      padding: 48px 40px 32px;
+      border-bottom: 3px solid var(--yellow);
+    }
+
+    .page-header h1 { font-size: 56px; color: var(--white); margin-bottom: 6px; }
+    .page-header p { color: #777; font-size: 13px; }
+
+    .body {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 0;
+      background: var(--gray);
+    }
+
+    .list-main { padding: 32px 40px; }
+
+    .section-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--mid);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 48px 1fr auto auto;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      background: var(--white);
+      border: 1.5px solid var(--black);
+      border-bottom: none;
+      transition: background 0.15s;
+    }
+
+    .list-item:last-child { border-bottom: 1.5px solid var(--black); }
+    .list-item:hover { background: #f8f8f2; }
+
+    .item-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 24px;
+      color: var(--yellow);
+      text-align: center;
+    }
+
+    .item-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: lowercase;
+    }
+
+    .item-shop { font-size: 11px; color: var(--mid); }
+
+    .item-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .item-remove {
+      background: none;
+      border: none;
+      color: var(--mid);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+
+    .item-remove:hover { color: #cc3333; }
+
+    /* BEST SPAZA FEATURE */
+    .best-spaza-banner {
+      margin-top: 24px;
+      background: var(--yellow);
+      border: 1.5px solid var(--black);
+      padding: 20px;
+    }
+
+    .best-spaza-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    .best-spaza-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+      text-transform: lowercase;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .best-spaza-sub { font-size: 12px; color: #444; margin-bottom: 14px; }
+
+    .best-spaza-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+
+    .best-item-tag {
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* emtpy state */
+    .empty-state {
+      text-align: center;
+      padding: 80px 40px;
+      display: none;
+    }
+
+    .empty-state h2 {
+      font-size: 40px;
+      text-transform: lowercase;
+      margin-bottom: 10px;
+    }
+
+    .empty-state p { font-size: 13px; color: var(--mid); margin-bottom: 20px; }
+
+  
+    /* section at the side for summary */
+    .summary-sidebar {
+      background: var(--white);
+      border-left: 1.5px solid var(--black);
+      padding: 28px;
+    }
+
+    .summary-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      text-transform: lowercase;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray);
+      font-size: 13px;
+    }
+
+    .summary-row:last-of-type { border-bottom: none; }
+
+    .summary-label { color: var(--mid); }
+
+    .summary-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-top: 2px solid var(--black);
+      margin-top: 8px;
+    }
+
+    .summary-total-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: lowercase;
+    }
+
+    .summary-total-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+    }
+
+    .clear-list-btn {
+      width: 100%;
+      background: none;
+      border: 1.5px solid var(--black);
+      padding: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 10px;
+      color: var(--mid);
+      transition: all 0.15s;
+    }
+
+    .clear-list-btn:hover {
+      background: #cc3333;
+      color: var(--white);
+      border-color: #cc3333;
+    }
+
+    .disclaimer {
+      font-size: 10px;
+      color: #bbb;
+      line-height: 1.6;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--gray);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">kasi <span>korner.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">home</a></li>
+    <li><a href="browse.html">browse spaza shops</a></li>
+    <li><a href="categories.html">categories</a></li>
+    <li><a href="mylist.html" class="active">my list</a></li>
+    <li><a href="about.html">about</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="mylist.html" class="cart-icon">&#9776;<span class="cart-badge" id="cart-count">0</span></a>
+    <a href="list-your-shop.html" class="nav-cta">list your shop</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>my list.</h1>
+  <p>Items you've saved. We'll find the best spaza to visit for your whole list</p>
+</div>
+
+<div class="body">
+  <div class="list-main">
+    <div id="empty-state" class="empty-state">
+      <h2>your list is empty.</h2>
+      <p>Add items from any spaza shop page and we'll find the best shop to visit.</p>
+      <a href="browse.html" class="btn-primary">browse spaza shops</a>
+    </div>
+
+    <div id="list-content">
+      <div class="section-heading" id="items-label">saved items (0)</div>
+      <div id="list-items"></div>
+
+      <div id="best-spaza-section" class="best-spaza-banner" style="display:none;">
+        <div class="best-spaza-label">best spaza for your list</div>
+        <div class="best-spaza-name" id="best-name">—</div>
+        <div class="best-spaza-sub" id="best-sub">—</div>
+        <div class="best-spaza-items" id="best-items"></div>
+        <a href="spaza.html" class="btn-dark">view shop →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-sidebar">
+    <div class="summary-title">summary.</div>
+    <div class="summary-row">
+      <span class="summary-label">items saved</span>
+      <span class="summary-val" id="sum-items">0</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">shops needed</span>
+      <span class="summary-val" id="sum-shops">0</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">best spaza covers</span>
+      <span class="summary-val" id="sum-coverage">—</span>
+    </div>
+    <div class="summary-total-row">
+      <span class="summary-total-label">total to bring</span>
+      <span class="summary-total-val" id="sum-total">R0</span>
+    </div>
+    <a href="browse.html" class="btn-primary" style="width:100%;text-align:center;display:block;margin-top:14px;">add more items</a>
+    <button class="clear-list-btn" onclick="clearList()">clear entire list</button>
+    <div class="disclaimer">
+      Prices shown are as listed by shop owners. Actual prices may vary slightly. Always confirm at the shop.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">kasi <span>korner.</span></div>
+  <p>© 2026 Kasi Korner | Connecting township communities to local spaza shops</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const shopData = {
+  "Amir's Spaza": { distance: "0.3km", status: "Open now · closes 10:30pm" },
+  "Sam's Corner": { distance: "0.6km", status: "Open now · closes 9:00pm" },
+  "Sipho's General": { distance: "0.9km", status: "Closed · opens 6:00am" },
+  "August Store": { distance: "0.7km", status: "Open now · closes 9:30pm" },
+  "Dunoon General": { distance: "1.4km", status: "Open now · closes 9:00pm" },
+};
+
+function getList() { return JSON.parse(localStorage.getItem('kasiList') || '[]'); }
+function saveList(list) { localStorage.setItem('kasiList', JSON.stringify(list)); }
+
+function removeItem(id) {
+  let list = getList().filter(item => item.id !== id);
+  saveList(list);
+  renderList();
+  showToast('item removed');
+}
+
+function clearList() {
+  if (confirm('Clear your entire list?')) {
+    saveList([]);
+    renderList();
+    showToast('list cleared');
+  }
+}
+
+function findBestSpaza(list) {
+  if (!list.length) return null;
+
+  const shopCounts = {};
+  list.forEach(item => {
+    const shop = item.shop;
+    shopCounts[shop] = (shopCounts[shop] || 0) + 1;
+  });
+
+  const best = Object.entries(shopCounts).sort((a, b) => b[1] - a[1])[0];
+  if (!best) return null;
+
+  const [shopName, count] = best;
+  const items = list.filter(i => i.shop === shopName);
+  return { name: shopName, count, items, info: shopData[shopName] };
+}
+
+function renderList() {
+  const list = getList();
+  const empty = document.getElementById('empty-state');
+  const content = document.getElementById('list-content');
+  const cartBadge = document.getElementById('cart-count');
+
+  cartBadge.textContent = list.length;
+
+  if (list.length === 0) {
+    empty.style.display = 'block';
+    content.style.display = 'none';
+    document.getElementById('sum-items').textContent = '0';
+    document.getElementById('sum-shops').textContent = '0';
+    document.getElementById('sum-coverage').textContent = '—';
+    document.getElementById('sum-total').textContent = 'R0';
+    return;
+  }
+
+  empty.style.display = 'none';
+  content.style.display = 'block';
+
+  document.getElementById('items-label').textContent = `saved items (${list.length})`;
+
+  document.getElementById('list-items').innerHTML = list.map((item, i) => `
+    <div class="list-item">
+      <div class="item-num">${String(i + 1).padStart(2, '0')}</div>
+      <div>
+        <div class="item-name">${item.name.toLowerCase()}</div>
+        <div class="item-shop">${item.shop}</div>
+      </div>
+      <div class="item-price">${item.price > 0 ? `R${item.price}` : '—'}</div>
+      <button class="item-remove" onclick="removeItem(${item.id})">×</button>
+    </div>
+  `).join('');
+
+  const best = findBestSpaza(list);
+  const bestSection = document.getElementById('best-spaza-section');
+
+  if (best) {
+    bestSection.style.display = 'block';
+    document.getElementById('best-name').textContent = best.name.toLowerCase();
+    document.getElementById('best-sub').textContent =
+      `Has ${best.count} of your ${list.length} item${list.length !== 1 ? 's' : ''} · ${best.info?.distance || ''} away · ${best.info?.status || ''}`;
+    document.getElementById('best-items').innerHTML =
+      best.items.map(i => `<span class="best-item-tag">${i.name.toLowerCase()}</span>`).join('');
+  } else {
+    bestSection.style.display = 'none';
+  }
+
+  const total = list.reduce((sum, item) => sum + (item.price || 0), 0);
+  const shops = [...new Set(list.map(i => i.shop))].length;
+  const coverage = best ? `${best.count}/${list.length} items` : '—';
+
+  document.getElementById('sum-items').textContent = list.length;
+  document.getElementById('sum-shops').textContent = shops;
+  document.getElementById('sum-coverage').textContent = coverage;
+  document.getElementById('sum-total').textContent = `R${total}`;
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+renderList();
+</script>
+</body>
+</html>
+

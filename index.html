@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kasi Korner: Know before you leave home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+
+    /* hero section */
+    .hero {
+      background: var(--black);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+    }
+
+    .hero-left {
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1.5px solid #333;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 16px;
+    }
+
+    .hero-h1 {
+      font-size: 72px;
+      color: var(--white);
+      margin-bottom: 20px;
+      line-height: 0.95;
+    }
+
+    .hero-h1 em {
+      color: var(--yellow);
+      font-style: normal;
+    }
+
+    .hero-sub {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 340px;
+      margin-bottom: 32px;
+    }
+
+    .hero-btns { display: flex; gap: 12px; }
+
+
+    /* search panel */
+    .hero-right {
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .search-panel {
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .search-panel-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      color: var(--white);
+      text-transform: lowercase;
+      margin-bottom: 16px;
+    }
+
+    .search-panel-title span { color: var(--yellow); }
+
+    .search-box {
+      display: flex;
+      border: 2px solid var(--yellow);
+      margin-bottom: 14px;
+    }
+
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--white);
+      outline: none;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .search-box input::placeholder { color: #666; }
+
+    .search-box button {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      padding: 0 16px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .quick-tag {
+      background: #222;
+      color: #aaa;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 5px 10px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: 1px solid #333;
+      transition: all 0.2s;
+    }
+
+    .quick-tag:hover {
+      background: var(--yellow);
+      color: var(--black);
+      border-color: var(--yellow);
+    }
+
+    .search-result-preview {
+      border-top: 1px solid #333;
+      padding-top: 14px;
+    }
+
+    .preview-label {
+      font-size: 10px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .preview-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #222;
+    }
+
+    .preview-item-name { font-size: 12px; color: #ccc; }
+    .preview-item-price { font-size: 13px; font-weight: 700; color: var(--yellow); font-family: 'Barlow Condensed', sans-serif; }
+    .preview-item-shop { font-size: 10px; color: #555; }
+
+
+
+
+    /* categories sec */
+    .categories { padding: 48px 40px; background: var(--white); }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      border: 1.5px solid var(--black);
+      margin-top: 20px;
+    }
+
+    .cat-item {
+      padding: 24px 16px;
+      text-align: center;
+      border-right: 1.5px solid var(--black);
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: var(--black);
+      display: block;
+    }
+
+    .cat-item:last-child { border-right: none; }
+    .cat-item:hover { background: var(--yellow); }
+
+    .cat-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--black);
+      margin: 0 auto 10px;
+    }
+
+    .cat-item:hover .cat-icon { background: var(--black); }
+
+    .cat-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cat-count { font-size: 11px; color: var(--mid); margin-top: 3px; }
+
+    /* nearby spaza shops */
+    .nearby { padding: 48px 40px; background: var(--gray); }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+    }
+
+    .section-header h2 { font-size: 40px; color: var(--black); }
+
+    .section-header a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 2px solid var(--yellow);
+      padding-bottom: 2px;
+    }
+
+    .spaza-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1.5px solid var(--black);
+    }
+
+    .spaza-card {
+      border-right: 1.5px solid var(--black);
+      background: var(--white);
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+      color: var(--black);
+      display: block;
+    }
+
+    .spaza-card:last-child { border-right: none; }
+    .spaza-card:hover { background: #f0f0ea; }
+
+    .spaza-img {
+      height: 120px;
+      background: var(--black);
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+      position: relative;
+    }
+
+    .spaza-img-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--white);
+      text-transform: lowercase;
+      line-height: 1;
+    }
+
+    .spaza-status {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .spaza-body { padding: 16px; border-top: 1.5px solid var(--black); }
+
+    .spaza-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: lowercase;
+      margin-bottom: 4px;
+    }
+
+    .spaza-meta { font-size: 11px; color: var(--mid); margin-bottom: 10px; }
+
+    .spaza-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+
+    .spaza-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid var(--gray);
+    }
+
+    .spaza-rating {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .spaza-rating em {
+      color: var(--yellow);
+      font-style: normal;
+    }
+
+    /* how does it work section (of home page) */
+    .how { background: var(--black); padding: 60px 40px; }
+    .how h2 { font-size: 48px; color: var(--white); margin-bottom: 40px; }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1.5px solid #333;
+    }
+
+    .how-item {
+      padding: 32px 28px;
+      border-right: 1.5px solid #333;
+    }
+
+    .how-item:last-child { border-right: none; }
+
+    .how-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 48px;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .how-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--white);
+      text-transform: lowercase;
+      margin-bottom: 10px;
+    }
+
+    .how-desc { font-size: 13px; color: #777; line-height: 1.7; }
+
+    /* own a spaza shop? banner */
+    .owner-banner {
+      background: var(--yellow);
+      padding: 48px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .owner-banner h2 { font-size: 40px; color: var(--black); }
+    .owner-banner p { font-size: 13px; color: #555; margin-top: 6px; }
+
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--black);
+      color: var(--white);
+      padding: 12px 20px;
+      font-size: 13px;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+      pointer-events: none;
+      border-left: 3px solid var(--yellow);
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">kasi <span>korner.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">home</a></li>
+    <li><a href="browse.html">browse spaza shops</a></li>
+    <li><a href="categories.html">categories</a></li>
+    <li><a href="mylist.html">my list</a></li>
+    <li><a href="about.html">about</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="mylist.html" class="cart-icon">
+      &#9776;
+      <span class="cart-badge" id="cart-count">0</span>
+    </a>
+    <a href="list-your-shop.html" class="nav-cta">list your shop</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">built for iKasi.</div>
+    <h1 class="hero-h1">know<br>before<br>you <em>leave.</em></h1>
+    <p class="hero-sub">Browse nearby spaza shops, check what's in stock and at what price before you walk out the door. No wasted trips. No surprises!</p>
+    <div class="hero-btns">
+      <a href="browse.html" class="btn-primary">browse spazas</a>
+      <a href="about.html" class="btn-outline">how it works</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="search-panel">
+      <div class="search-panel-title">what are you<br><span>looking for?</span></div>
+      <div class="search-box">
+        <input type="text" id="hero-search" placeholder="ex. spices, airtime, bread...">
+        <button onclick="doSearch()">search</button>
+      </div>
+      <div class="quick-tags">
+        <span class="quick-tag" onclick="setSearch('groceries')">groceries</span>
+        <span class="quick-tag" onclick="setSearch('airtime')">airtime</span>
+        <span class="quick-tag" onclick="setSearch('snacks')">snacks</span>
+        <span class="quick-tag" onclick="setSearch('bread')">bread</span>
+        <span class="quick-tag" onclick="setSearch('electricity')">electricity</span>
+        <span class="quick-tag" onclick="setSearch('spices')">spices</span>
+      </div>
+      <div class="search-result-preview">
+        <div class="preview-label">What iKasi is buying right now</div>
+        <div class="preview-item">
+          <div><div class="preview-item-name">Albany White Bread</div><div class="preview-item-shop">Amir's Spaza · 0.3km</div></div>
+          <div class="preview-item-price">R18</div>
+        </div>
+        <div class="preview-item">
+          <div><div class="preview-item-name">Vodacom R10 Airtime</div><div class="preview-item-shop">Fatima's Corner · 0.6km</div></div>
+          <div class="preview-item-price">R10</div>
+        </div>
+        <div class="preview-item">
+          <div><div class="preview-item-name">Chicken Spice 100g</div><div class="preview-item-shop">Amir's Spaza · 0.3km</div></div>
+          <div class="preview-item-price">R8</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="section-label">browse by category</div>
+  <div class="cat-grid">
+    <a href="categories.html#groceries" class="cat-item">
+      <div class="cat-icon"></div>
+      <div class="cat-name">groceries</div>
+      <div class="cat-count">12 products</div>
+    </a>
+    <a href="categories.html#airtime" class="cat-item">
+      <div class="cat-icon"></div>
+      <div class="cat-name">airtime & data</div>
+      <div class="cat-count">8 products</div>
+    </a>
+    <a href="categories.html#snacks" class="cat-item">
+      <div class="cat-icon"></div>
+      <div class="cat-name">snacks</div>
+      <div class="cat-count">15 products</div>
+    </a>
+    <a href="categories.html#toiletries" class="cat-item">
+      <div class="cat-icon"></div>
+      <div class="cat-name">toiletries</div>
+      <div class="cat-count">10 products</div>
+    </a>
+    <a href="categories.html#household" class="cat-item">
+      <div class="cat-icon"></div>
+      <div class="cat-name">household</div>
+      <div class="cat-count">9 products</div>
+    </a>
+  </div>
+</section>
+
+<section class="nearby">
+  <div class="section-header">
+    <h2>spaza shops near you.</h2>
+    <a href="browse.html">view all →</a>
+  </div>
+  <div class="spaza-grid">
+    <a href="spaza.html" class="spaza-card">
+      <div class="spaza-img" style="background-image: url(&quot;images/amir's-spaza.jpg&quot;); background-size: cover; background-position: center;">
+        <div class="spaza-img-label">amir's<br>spaza</div>
+        <div class="spaza-status"><span class="tag-open">open</span></div>
+      </div>
+      <div class="spaza-body">
+        <div class="spaza-name">amir's spaza</div>
+        <div class="spaza-meta">Corner of Dunoon Road · 0.3km away</div>
+        <div class="spaza-tags">
+          <span class="tag">groceries</span>
+          <span class="tag">airtime</span>
+          <span class="tag">snacks</span>
+        </div>
+        <div class="spaza-footer">
+          <div class="spaza-rating"><em>4.7</em> · 43 reviews</div>
+          <span class="btn-dark">view shop</span>
+        </div>
+      </div>
+    </a>
+    <a href="spaza.html" class="spaza-card">
+      <div class="spaza-img" style="background-image: url(&quot;images/sam's-corner.jpg&quot;); background-size: cover; background-position: center;">
+        <div class="spaza-img-label">sam's<br>corner</div>
+        <div class="spaza-status"><span class="tag-open">open</span></div>
+      </div>
+      <div class="spaza-body">
+        <div class="spaza-name">sam's corner</div>
+        <div class="spaza-meta">Main Street · 0.6km away</div>
+        <div class="spaza-tags">
+          <span class="tag">toiletries</span>
+          <span class="tag">household</span>
+          <span class="tag">snacks</span>
+        </div>
+        <div class="spaza-footer">
+          <div class="spaza-rating"><em>4.4</em> · 28 reviews</div>
+          <span class="btn-dark">view shop</span>
+        </div>
+      </div>
+    </a>
+    <a href="spaza.html" class="spaza-card">
+      <div class="spaza-img" style="background-image: url(&quot;images/sipho's.jpg&quot;); background-size: cover; background-position: center;">
+        <div class="spaza-img-label">sipho's<br>general</div>
+        <div class="spaza-status"><span class="tag-closed">closed</span></div>
+      </div>
+      <div class="spaza-body">
+        <div class="spaza-name">sipho's general</div>
+        <div class="spaza-meta">Phase 2 · 0.9km away</div>
+        <div class="spaza-tags">
+          <span class="tag">groceries</span>
+          <span class="tag">electricity</span>
+        </div>
+        <div class="spaza-footer">
+          <div class="spaza-rating"><em>4.2</em> · 19 reviews</div>
+          <span class="btn-dark">view shop</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="how">
+  <h2>how it works.</h2>
+  <div class="how-grid">
+    <div class="how-item">
+      <div class="how-num">01</div>
+      <div class="how-title">search a product</div>
+      <div class="how-desc">Type what you need, whether it's bread, spices, or airtime. See which spazas nearby have it in stock right now.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-num">02</div>
+      <div class="how-title">compare prices</div>
+      <div class="how-desc">See exactly what each shop charges before you leave home. No more surprises at the counter.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-num">03</div>
+      <div class="how-title">walk there knowing</div>
+      <div class="how-desc">Head straight to the right spaza with the exact change. No second trips. No wasted time. No surprises!</div>
+    </div>
+  </div>
+</section>
+
+<section class="owner-banner">
+  <div>
+    <h2>own a spaza shop?</h2>
+    <p>List your shop for R75/month and get found by your community.</p>
+  </div>
+  <a href="list-your-shop.html" class="btn-dark">list your shop →</a>
+</section>
+
+<footer>
+  <div class="logo">kasi <span>korner.</span></div>
+  <p>© 2026 Kasi Korner | Connecting township communities to local spaza shops</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function setSearch(val) {
+    document.getElementById('hero-search').value = val;
+  }
+
+  function doSearch() {
+    const val = document.getElementById('hero-search').value.trim();
+    if (val) {
+      window.location.href = `browse.html?search=${encodeURIComponent(val)}`;
+    }
+  }
+
+  document.getElementById('hero-search').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  function updateCartCount() {
+    const list = JSON.parse(localStorage.getItem('kasiList') || '[]');
+    document.getElementById('cart-count').textContent = list.length;
+  }
+
+  updateCartCount();
+</script>
+
+</body>
+</html>

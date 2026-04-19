@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Spazas: Kasi Korner</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-header {
+      background: var(--black);
+      padding: 48px 40px 32px;
+      border-bottom: 3px solid var(--yellow);
+    }
+
+    .page-header h1 { font-size: 56px; color: var(--white); margin-bottom: 6px; }
+    .page-header p { color: #777; font-size: 13px; }
+
+    .search-row {
+      display: flex;
+      gap: 0;
+      margin-top: 20px;
+    }
+
+    .search-row input {
+      flex: 1;
+      background: #111;
+      border: 2px solid #333;
+      border-right: none;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--white);
+      outline: none;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .search-row input::placeholder { color: #555; }
+    .search-row input:focus { border-color: var(--yellow); }
+
+    .search-row button {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .body-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background: var(--white);
+      border-right: 1.5px solid var(--black);
+      padding: 28px 20px;
+    }
+
+    .filter-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--black);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .filter-section { margin-bottom: 24px; }
+
+    .filter-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 10px;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+      cursor: pointer;
+    }
+
+    .filter-option input[type="checkbox"] {
+      accent-color: var(--yellow);
+      width: 14px;
+      height: 14px;
+    }
+
+    .filter-option label {
+      font-size: 13px;
+      color: var(--black);
+      cursor: pointer;
+    }
+
+    .filter-divider {
+      border: none;
+      border-top: 1px solid var(--gray);
+      margin: 20px 0;
+    }
+
+    .clear-filters {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--mid);
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    .clear-filters:hover { color: var(--black); }
+
+    /* MAIN */
+    .main-content { padding: 28px 32px; background: var(--gray); }
+
+    .results-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .results-count {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: lowercase;
+    }
+
+    .sort-select {
+      background: var(--white);
+      border: 1.5px solid var(--black);
+      padding: 7px 12px;
+      font-size: 12px;
+      font-family: 'Barlow', sans-serif;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .spaza-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border: 1.5px solid var(--black);
+    }
+
+    .spaza-card {
+      background: var(--white);
+      border-right: 1.5px solid var(--black);
+      border-bottom: 1.5px solid var(--black);
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--black);
+      display: block;
+      transition: background 0.15s;
+    }
+
+    .spaza-card:nth-child(2n) { border-right: none; }
+    .spaza-card:hover { background: #f8f8f2; }
+
+    .spaza-img {
+      height: 100px;
+      background: var(--black);
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+      position: relative;
+    }
+
+    .spaza-img-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      color: var(--white);
+      text-transform: lowercase;
+      line-height: 1;
+    }
+
+    .spaza-status { position: absolute; top: 10px; right: 10px; }
+
+    .spaza-body { padding: 16px; border-top: 1.5px solid var(--black); }
+
+    .spaza-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      text-transform: lowercase;
+      margin-bottom: 3px;
+    }
+
+    .spaza-meta { font-size: 11px; color: var(--mid); margin-bottom: 10px; }
+
+    .spaza-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
+
+    .spaza-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .spaza-rating {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .spaza-rating em { color: var(--yellow); font-style: normal; }
+
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      display: none;
+    }
+
+    .no-results h3 {
+      font-size: 28px;
+      text-transform: lowercase;
+      margin-bottom: 8px;
+    }
+
+    .no-results p { font-size: 13px; color: var(--mid); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">kasi <span>korner.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">home</a></li>
+    <li><a href="browse.html" class="active">browse spaza shops</a></li>
+    <li><a href="categories.html">categories</a></li>
+    <li><a href="mylist.html">my list</a></li>
+    <li><a href="about.html">about</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="mylist.html" class="cart-icon">&#9776;<span class="cart-badge" id="cart-count">0</span></a>
+    <a href="list-your-shop.html" class="nav-cta">list your shop</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>browse spaza shops.</h1>
+  <p>Find spaza shops near you and see what they stock!</p>
+  <div class="search-row">
+    <input type="text" id="search-input" placeholder="Search by shop name or product...">
+    <button onclick="filterShops()">search</button>
+  </div>
+</div>
+
+<div class="body-layout">
+  <div class="sidebar">
+    <div class="filter-heading">filters</div>
+
+    <div class="filter-section">
+      <div class="filter-section-title">status</div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-open" checked onchange="filterShops()">
+        <label for="f-open">Open now</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-late" onchange="filterShops()">
+        <label for="f-late">Open after 9pm</label>
+      </div>
+    </div>
+
+    <hr class="filter-divider">
+
+    <div class="filter-section">
+      <div class="filter-section-title">sells</div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-groceries" checked onchange="filterShops()">
+        <label for="f-groceries">Groceries</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-airtime" checked onchange="filterShops()">
+        <label for="f-airtime">Airtime & Data</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-snacks" onchange="filterShops()">
+        <label for="f-snacks">Snacks</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-toiletries" onchange="filterShops()">
+        <label for="f-toiletries">Toiletries</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-household" onchange="filterShops()">
+        <label for="f-household">Household</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="f-electricity" onchange="filterShops()">
+        <label for="f-electricity">Electricity</label>
+      </div>
+    </div>
+
+    <hr class="filter-divider">
+
+    <div class="filter-section">
+      <div class="filter-section-title">distance</div>
+      <div class="filter-option">
+        <input type="radio" name="dist" id="d-half" checked onchange="filterShops()">
+        <label for="d-half">Under 0.5km</label>
+      </div>
+      <div class="filter-option">
+        <input type="radio" name="dist" id="d-one" onchange="filterShops()">
+        <label for="d-one">Under 1km</label>
+      </div>
+      <div class="filter-option">
+        <input type="radio" name="dist" id="d-two" onchange="filterShops()">
+        <label for="d-two">Under 2km</label>
+      </div>
+    </div>
+
+    <hr class="filter-divider">
+    <button class="clear-filters" onclick="clearFilters()">clear all filters</button>
+  </div>
+
+  <div class="main-content">
+    <div class="results-bar">
+      <div class="results-count" id="results-count"> showing 6 spaza shops near dunoon </div>
+      <select class="sort-select" onchange="sortShops(this.value)">
+        <option value="distance">Nearest first</option>
+        <option value="rating">Highest rated</option>
+        <option value="products">Most products</option>
+      </select>
+    </div>
+
+    <div class="spaza-grid" id="spaza-grid">
+    </div>
+
+    <div class="no-results" id="no-results">
+      <h3>no shops found.</h3>
+      <p>Try adjusting your filters or search term.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">kasi <span>korner.</span></div>
+  <p>© 2026 Kasi Korner | Connecting township communities to local spaza shops</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const shops = [
+  { id:1, name:"Amir's Spaza", area:"Corner of Dunoon Road", distance:0.3, open:true, late:true, cats:["groceries","airtime","snacks","toiletries"], rating:4.7, reviews:43, products:24 },
+  { id:2, name:"Sam's Corner", area:"Main Street", distance:0.6, open:true, late:false, cats:["toiletries","household","snacks"], rating:4.2, reviews:23, products:18 },
+  { id:3, name:"Sipho's General", area:"Phase 2", distance:0.9, open:false, late:false, cats:["groceries","electricity"], rating:4.1, reviews:14, products:14 },
+  { id:4, name:"Lucky's Shop", area:"Phase 5", distance:1.1, open:false, late:false, cats:["airtime","groceries","snacks"], rating:4.0, reviews:45, products:12 },
+  { id:5, name:"August Store", area:"Phase 3", distance:0.7, open:true, late:true, cats:["groceries","household","toiletries"], rating:4.6, reviews:87, products:20 },
+  { id:6, name:"Dunoon General", area:"Phase 7", distance:1.4, open:true, late:false, cats:["groceries","airtime","electricity","household"], rating:4.1, reviews:22, products:16 },
+];
+
+let currentShops = [...shops];
+
+function renderShops(list) {
+  const grid = document.getElementById('spaza-grid');
+  const noRes = document.getElementById('no-results');
+  const count = document.getElementById('results-count');
+
+  if (list.length === 0) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    count.textContent = 'no shops found';
+    return;
+  }
+
+  noRes.style.display = 'none';
+  count.textContent = `showing ${list.length} spaza shop${list.length !== 1 ? 's' : ''} near dunoon`;
+
+  grid.innerHTML = list.map(s => `
+    <a href="spaza.html" class="spaza-card">
+      <div class="spaza-img">
+        <div class="spaza-img-label">${s.name.toLowerCase()}</div>
+        <div class="spaza-status">
+          <span class="${s.open ? 'tag-open' : 'tag-closed'}">${s.open ? 'open' : 'closed'}</span>
+        </div>
+      </div>
+      <div class="spaza-body">
+        <div class="spaza-name">${s.name.toLowerCase()}</div>
+        <div class="spaza-meta">${s.area} · ${s.distance}km away</div>
+        <div class="spaza-tags">${s.cats.map(c => `<span class="tag">${c}</span>`).join('')}</div>
+        <div class="spaza-footer">
+          <div class="spaza-rating"><em>${s.rating}</em> · ${s.reviews} reviews</div>
+          <span class="btn-dark">view shop</span>
+        </div>
+      </div>
+    </a>
+  `).join('');
+}
+
+function filterShops() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const onlyOpen = document.getElementById('f-open').checked;
+  const onlyLate = document.getElementById('f-late').checked;
+  const wantGroceries = document.getElementById('f-groceries').checked;
+  const wantAirtime = document.getElementById('f-airtime').checked;
+  const wantSnacks = document.getElementById('f-snacks').checked;
+  const wantToiletries = document.getElementById('f-toiletries').checked;
+  const wantHousehold = document.getElementById('f-household').checked;
+  const wantElectricity = document.getElementById('f-electricity').checked;
+
+  const distEl = document.querySelector('input[name="dist"]:checked');
+  const maxDist = distEl?.id === 'd-half' ? 0.5 : distEl?.id === 'd-one' ? 1.0 : 2.0;
+
+  const wantedCats = [];
+  if (wantGroceries) wantedCats.push('groceries');
+  if (wantAirtime) wantedCats.push('airtime');
+  if (wantSnacks) wantedCats.push('snacks');
+  if (wantToiletries) wantedCats.push('toiletries');
+  if (wantHousehold) wantedCats.push('household');
+  if (wantElectricity) wantedCats.push('electricity');
+
+  currentShops = shops.filter(s => {
+    if (search && !s.name.toLowerCase().includes(search) && !s.cats.some(c => c.includes(search))) return false;
+    if (onlyOpen && !s.open) return false;
+    if (onlyLate && !s.late) return false;
+    if (s.distance > maxDist) return false;
+    if (wantedCats.length > 0 && !wantedCats.some(c => s.cats.includes(c))) return false;
+    return true;
+  });
+
+  renderShops(currentShops);
+}
+
+function sortShops(val) {
+  if (val === 'distance') currentShops.sort((a,b) => a.distance - b.distance);
+  if (val === 'rating') currentShops.sort((a,b) => b.rating - a.rating);
+  if (val === 'products') currentShops.sort((a,b) => b.products - a.products);
+  renderShops(currentShops);
+}
+
+function clearFilters() {
+  document.getElementById('f-open').checked = false;
+  document.getElementById('f-late').checked = false;
+  document.getElementById('f-groceries').checked = false;
+  document.getElementById('f-airtime').checked = false;
+  document.getElementById('f-snacks').checked = false;
+  document.getElementById('f-toiletries').checked = false;
+  document.getElementById('f-household').checked = false;
+  document.getElementById('f-electricity').checked = false;
+  document.getElementById('d-two').checked = true;
+  document.getElementById('search-input').value = '';
+  filterShops();
+}
+
+function updateCartCount() {
+  const list = JSON.parse(localStorage.getItem('kasiList') || '[]');
+  document.getElementById('cart-count').textContent = list.length;
+}
+
+const params = new URLSearchParams(window.location.search);
+if (params.get('search')) {
+  document.getElementById('search-input').value = params.get('search');
+}
+
+renderShops(shops);
+filterShops();
+updateCartCount();
+
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') filterShops();
+});
+</script>
+</body>
+</html>
